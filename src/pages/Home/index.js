@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -36,46 +36,49 @@ const list = [
 ];
 
 export function Home() {
-  const [userInfo, setUserInfo] = useState(null);
+  const [maxHeight, setMaxHeight] = useState(200);
   const [saldo, setSaldo] = useState("");
   const [debit, setDebit] = useState("");
   const [moviments, setMoviments] = useState([]);
 
-  console.log("movementsss", moviments);
+  const somarCamposDoDocumento = async () => {
+    let val = await getDoc(doc(db, "saldo", "idsaldo"));
 
-  useEffect(() => {
-    const somarCamposDoDocumento = async () => {
-      let val = await getDoc(doc(db, "saldo", "idsaldo"));
+    if (val.exists()) {
+      const v = val.data().valor;
+      setSaldo(v);
+    }
 
-      if (val.exists()) {
-        const v = val.data().valor;
-        setSaldo(v);
+    let deb = await getDoc(doc(db, "debito", "iddebito"));
+
+    if (deb.exists()) {
+      const v2 = deb.data().valor;
+      setDebit(v2);
+    }
+
+    const collectionRef = collection(db, "movimentos"); // Substitua 'sua-colecao' pelo nome da coleção
+    const querySnapshot = await getDocs(collectionRef);
+
+    const documents = [];
+    querySnapshot.forEach((doc) => {
+      console.log("docc", doc.data());
+      if (doc.exists()) {
+        documents.push({ ...doc.data() });
       }
+    });
 
-      let deb = await getDoc(doc(db, "debito", "iddebito"));
+    setMoviments(documents);
+  };
 
-      if (deb.exists()) {
-        const v2 = deb.data().valor;
-        setDebit(v2);
-      }
-
-      const collectionRef = collection(db, "movimentos"); // Substitua 'sua-colecao' pelo nome da coleção
-      const querySnapshot = await getDocs(collectionRef);
-
-      const documents = [];
-      querySnapshot.forEach((doc) => {
-        console.log("docc", doc.data());
-        if (doc.exists()) {
-          documents.push({ ...doc.data() });
-        }
-      });
-
-      setMoviments(documents);
-      console.log("moviments", moviments);
-    };
-
+  const atualizarDados = async () => {
     somarCamposDoDocumento();
-  }, []);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      atualizarDados();
+    }, [])
+  );
 
   return (
     <View>
@@ -85,9 +88,12 @@ export function Home() {
       <Text style={styles.title}>Ultimas movimentações</Text>
 
       <FlatList
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
         style={styles.list}
         data={moviments}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <Movements data={item} />}
       />
