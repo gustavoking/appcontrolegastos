@@ -6,6 +6,7 @@ import Balance from "../src/components/Balance";
 import Movements from "../src/components/Movements";
 import AddCredit from "../src/pages/AddCredit";
 import Debit from "../src/pages/Debit";
+import Carteira from "../src/pages/Carteira";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default function AppRoutes() {
       <Stack.Screen name="Movements" component={Movements} />
       <Stack.Screen name="AddCredit" component={AddCredit} />
       <Stack.Screen name="Debit" component={Debit} />
+      <Stack.Screen name="Carteira" component={Carteira} />
     </Stack.Navigator>
   );
 }

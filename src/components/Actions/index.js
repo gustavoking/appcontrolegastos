@@ -42,14 +42,10 @@ export default function Actions() {
         <Text style={styles.labelButton}>Débito</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.actionButton}>
-        <View style={styles.areaButton}>
-          <AntDesign name="barcode" size={26} color="black" />
-        </View>
-        <Text style={styles.labelButton}>Boletos</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.actionButton}>
+      <TouchableOpacity
+        style={styles.actionButton}
+        onPress={() => navigation.navigate("Carteira")}
+      >
         <View style={styles.areaButton}>
           <AntDesign name="creditcard" size={26} color="black" />
         </View>

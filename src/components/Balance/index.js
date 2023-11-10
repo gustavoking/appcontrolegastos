@@ -29,7 +29,7 @@ export default function Balance({ saldo, gastos }) {
         <Text style={styles.itemTitle}>Saldo</Text>
         <TouchableOpacity onPress={toggleSaldo}>
           <Icon
-            name={mostrarSaldo ? "caret-up" : "caret-down"}
+            name={mostrarSaldo ? "eye" : "eye-slash"}
             size={18}
             color="grey"
           />
@@ -45,7 +45,7 @@ export default function Balance({ saldo, gastos }) {
         <Text style={styles.itemTitle}>Total de Gastos</Text>
         <TouchableOpacity onPress={toggleGastos}>
           <Icon
-            name={mostrarGastos ? "caret-up" : "caret-down"}
+            name={mostrarGastos ? "eye" : "eye-slash"}
             size={18}
             color="grey"
           />

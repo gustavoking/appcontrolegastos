@@ -19,6 +19,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.72.6",
     "react-native-masked-text": "^1.13.0",
+    "react-native-picker-select": "^9.0.0",
     "react-native-toast-message": "^2.1.7",
     "react-native-web": "~0.19.6"
   },

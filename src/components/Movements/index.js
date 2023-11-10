@@ -16,7 +16,7 @@ export default function Movements({ data }) {
       <Text style={styles.date}>{data.data}</Text>
       <Text style={styles.label}>{data.descricao}</Text>
       <View style={styles.content}>
-        <Text style={styles.label}></Text>
+        <Text style={styles.label}>{data.tipodeCarteira}</Text>
 
         {show ? (
           <Text style={data.type === 1 ? styles.value : styles.expenses}>
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     borderBottomColor: "#dadada",
     borderBottomWidth: 0.5,
+    marginTop: 5,
   },
   content: {
     flexDirection: "row",

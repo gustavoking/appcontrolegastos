@@ -36,7 +36,6 @@ const list = [
 ];
 
 export function Home() {
-  const [maxHeight, setMaxHeight] = useState(200);
   const [saldo, setSaldo] = useState("");
   const [debit, setDebit] = useState("");
   const [moviments, setMoviments] = useState([]);
