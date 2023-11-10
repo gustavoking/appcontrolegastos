@@ -1,24 +1,61 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function Balance({ saldo, gastos }) {
   const textStyle = saldo < 0 ? styles.negativo : styles.positivo;
+  const formatador = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
+  const [mostrarSaldo, setMostrarSaldo] = useState(false);
+  const [mostrarGastos, setMostrarGastos] = useState(false);
+
+  const saldoFormatado = formatador.format(saldo);
+  const gastosFormatado = formatador.format(gastos);
+
+  const toggleSaldo = () => {
+    setMostrarSaldo(!mostrarSaldo);
+  };
+
+  const toggleGastos = () => {
+    setMostrarGastos(!mostrarGastos);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.item}>
         <Text style={styles.itemTitle}>Saldo</Text>
-        <View style={styles.content}>
-          <Text style={styles.currencySymbol}>R$</Text>
-          <Text style={textStyle}>{saldo}</Text>
-        </View>
+        <TouchableOpacity onPress={toggleSaldo}>
+          <Icon
+            name={mostrarSaldo ? "caret-up" : "caret-down"}
+            size={18}
+            color="grey"
+          />
+        </TouchableOpacity>
+        {mostrarSaldo && (
+          <View style={styles.content}>
+            <Text style={styles.currencySymbol}>R$</Text>
+            <Text style={textStyle}>{saldoFormatado}</Text>
+          </View>
+        )}
       </View>
       <View style={styles.item}>
-        <Text style={styles.itemTitle}>Total de Débitos</Text>
-        <View style={styles.content}>
-          <Text style={styles.currencySymbol}>R$</Text>
-          <Text style={styles.expenses}>{gastos}</Text>
-        </View>
+        <Text style={styles.itemTitle}>Total de Gastos</Text>
+        <TouchableOpacity onPress={toggleGastos}>
+          <Icon
+            name={mostrarGastos ? "caret-up" : "caret-down"}
+            size={18}
+            color="grey"
+          />
+        </TouchableOpacity>
+        {mostrarGastos && (
+          <View style={styles.content}>
+            <Text style={styles.currencySymbol}>R$</Text>
+            <Text style={styles.expenses}>{gastosFormatado}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -40,7 +77,7 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   itemTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: "grey",
   },
   content: {
@@ -51,15 +88,15 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   negativo: {
-    fontSize: 22,
+    fontSize: 18,
     color: "#e74c3c",
   },
   positivo: {
-    fontSize: 22,
+    fontSize: 18,
     color: "#2ecc71",
   },
   expenses: {
-    fontSize: 22,
+    fontSize: 18,
     color: "#e74c3c",
   },
 });

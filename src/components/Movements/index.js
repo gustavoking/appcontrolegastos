@@ -4,20 +4,12 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 export default function Movements({ data }) {
   const [show, setShow] = useState(false);
 
-  // console.log("datt", data.data.getDate().toString().padStart(2, "0"));
-  // console.log("datt2", data.data);
+  const formatador = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
-  // function formatDate(d) {
-  //   const day = d.getDate().toString().padStart(2, "0"); // Obtém o dia e preenche com zero à esquerda se necessário
-  //   const month = (d.getMonth() + 1).toString().padStart(2, "0"); // Obtém o mês (lembrando que janeiro é 0) e preenche com zero à esquerda se necessário
-  //   const year = d.getFullYear();
-
-  //   return `${day}/${month}/${year}`;
-  // }
-
-  // const dataFormatada = formatDate(data.data); // Chame a função formatDate para obter a data formatada
-
-  // console.log(dataFormatada); // Saída: "08/11/2023" (para a data atual)
+  const saldoFormatado = formatador.format(data.movement);
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => setShow(!show)}>
@@ -28,7 +20,7 @@ export default function Movements({ data }) {
 
         {show ? (
           <Text style={data.type === 1 ? styles.value : styles.expenses}>
-            {data.type === 1 ? `R$ ${data.movement}` : `R$ -${data.movement}`}
+            {data.type === 1 ? ` ${saldoFormatado}` : ` -${saldoFormatado}`}
           </Text>
         ) : (
           <View style={styles.skeleton}></View>

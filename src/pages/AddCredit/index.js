@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TextInputMask } from "react-native-masked-text";
 import {
   View,
   Text,

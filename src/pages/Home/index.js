@@ -81,23 +81,17 @@ export function Home() {
   );
 
   return (
-    <View>
-      <Header name="Gustavo" />
+    <ScrollView>
+      <Header name="Controle de Gastos" />
       <Balance saldo={saldo} gastos={debit} />
       <Actions />
       <Text style={styles.title}>Ultimas movimentações</Text>
-
-      <FlatList
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-        style={styles.list}
-        data={moviments}
-        keyExtractor={(item, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <Movements data={item} />}
-      />
-    </View>
+      <View style={[styles.list]}>
+        {moviments.map((item, index) => (
+          <Movements key={index} data={item} />
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
